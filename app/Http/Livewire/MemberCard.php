@@ -63,6 +63,7 @@ class MemberCard extends Component
     public function updateLinkedStaffMember() {
         $this->staffLinkedToMember = [(int) $this->linkedStaffMemberId];
         $this->staffNamesLinkedToMember = $this->staffMembers[(int) $this->linkedStaffMemberId];
+        $this->multipleStaffLinked = false;
         $this->emit('memberStaffLinkUpdated', (int) $this->linkedStaffMemberId, $this->memberId);
     }
 
