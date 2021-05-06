@@ -8,6 +8,7 @@
         <div class="members col-span-7">
             <div class="title">Members</div>
             <div class="body grid lg:grid-cols-3 grid-cols-1">
+                @livewire('create-member')
                 @livewire('member-card',['memberId' => 1])
                 @livewire('member-card',['memberId' => 2])
                 @livewire('member-card',['memberId' => 3])
@@ -19,6 +20,7 @@
         <div class="staff col-span-2">
             <div class="title">Staff</div>
             <div class="body">
+                @livewire('create-staff')
                 @livewire('staff-card',['staffId' => 1])
                 @livewire('staff-card',['staffId' => 2])
                 @livewire('staff-card',['staffId' => 3])

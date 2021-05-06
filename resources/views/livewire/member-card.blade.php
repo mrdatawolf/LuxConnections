@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="grid grid-cols-6 text-left">
-        <div> <!-- confermation-modal -->
+        <div>
             <span wire:click="$set('showConfirmHeardModal', true)" class="{{ ($lastHeardIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full">record_voice_over</span>
         </div>
         <div class="col-span-2">
