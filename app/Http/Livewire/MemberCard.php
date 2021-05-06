@@ -47,6 +47,7 @@ class MemberCard extends Component
             $this->checkLastHeardDate();
         }
         $this->showConfirmHeardModal = false;
+        $this->checkForIssues();
     }
 
 
@@ -57,6 +58,7 @@ class MemberCard extends Component
         }
         $this->timesReachedOut++;
         $this->showConfirmReachOutModal = false;
+        $this->checkForIssues();
     }
 
 
@@ -65,6 +67,7 @@ class MemberCard extends Component
         $this->staffNamesLinkedToMember = $this->staffMembers[(int) $this->linkedStaffMemberId];
         $this->multipleStaffLinked = false;
         $this->emit('memberStaffLinkUpdated', (int) $this->linkedStaffMemberId, $this->memberId);
+        $this->checkForIssues();
     }
 
 
