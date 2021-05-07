@@ -4,7 +4,7 @@
             <div class="{{ ($userHasAlias) ? 'hidden' : '' }}"><span wire:click="$set('showConfirmBurdenModal', true)" class="{{ ($isStaff) ? 'bg-green-300' : 'bg-blue-300' }} material-icons rounded-full">fitness_center</span></div>
         </div>
         <div class="font-bold col-span-3">{{ $memberName }}</div>
-        <div col-span-2>
+        <div class="col-span-2">
             <x-jet-label for="linkedStaff" value="{{ __('Link To') }}" />
             <select
                 name="linkStaff"
