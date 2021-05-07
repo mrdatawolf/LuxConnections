@@ -58,4 +58,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function members(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Member::class, 'linked_id', 'id');
+    }
+
+    public function heard(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(HeardFrom::class);
+    }
+
+    public function reachedOut(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ReachedOut::class);
+    }
+
+    public function alias(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Member::class, 'user_id', 'id');
+    }
 }

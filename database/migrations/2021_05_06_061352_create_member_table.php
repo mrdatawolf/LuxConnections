@@ -16,6 +16,10 @@ class CreateMemberTable extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('user_id')->unsigned()->index()->nullable();
+            $table->integer('linked_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('linked_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

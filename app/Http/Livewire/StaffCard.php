@@ -2,34 +2,33 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Member;
+use App\Models\User;
 use Livewire\Component;
 
 class StaffCard extends Component
 {
-    public $staffId;
-    public $staffName;
+    public $user;
+    public $userId;
+    public $userName;
+    public $userAliasName;
     public $hasIssues;
     public $membersSupported;
     public $totalMembersSupported;
+    public $userHasAlias;
 
     public $listeners = ['memberStaffLinkUpdated'];
 
-    public function mount($staffId) {
-        $this->staffId = $staffId;
-
-        $this->getStaffName();
+    public function mount() {
+        $this->getUser();
         $this->getMembersSupported();
     }
 
-    public function memberStaffLinkUpdated($staffId, $memberId) {
-        $members = [
-            1 => '1llusionist#1981',
-            2 => '1one#1586',
-            3 => 'à¹–Ì¶Ì¶Ì¶Î¶ÍœÍ¡ GrimmÎ¶ÍœÍ¡à¹–#1817'
-        ];
-        if($staffId === $this->staffId) {
+    public function memberUserLinkUpdated($userId, $memberId) {
+
+        if($userId === $this->userId) {
             if(! in_array($memberId, array_keys($this->membersSupported))) {
-                $this->membersSupported[$memberId] = $members[$memberId];
+                $this->membersSupported[$memberId] = Member::find($memberId);
             }
         } else {
             if(in_array($memberId, array_keys($this->membersSupported))) {
@@ -43,22 +42,14 @@ class StaffCard extends Component
 
     }
 
-    private function getStaffName() {
-        $staffNames = [1 => 'Phylast', 2 => 'Ambear', 3 => 'Braelok'];
-        $this->staffName = $staffNames[$this->staffId];
-
+    private function getUser() {
+        $this->user = User::with('alias')->find($this->userId);
+        $this->userAliasName = (empty($this->user->alias)) ? 'unknown' : $this->user->alias->name;
     }
 
     private function getMembersSupported() {
-        $membersSupported = [
-            1 => [1 => '1llusionist#1981'],
-            2 => [
-                1 => '1llusionist#1981',
-                2 => '1one#1586'
-            ],
-            3 => [3 => 'à¹–Ì¶Ì¶Ì¶Î¶ÍœÍ¡ GrimmÎ¶ÍœÍ¡à¹–#1817']];
-        $this->totalMembersSupported = count($membersSupported[$this->staffId]);
-        $this->membersSupported = $membersSupported[$this->staffId];
+        $this->membersSupported = $this->user->members;
+        $this->totalMembersSupported = count($this->membersSupported);
     }
 
     public function render()
