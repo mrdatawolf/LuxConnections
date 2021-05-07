@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStaffReachOutToMemberTable extends Migration
+class CreateUserHeardFromMemberTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateStaffReachOutToMemberTable extends Migration
      */
     public function up()
     {
-        Schema::create('staff_reach_out_to_member', function (Blueprint $table) {
+        Schema::create('heard_from', function (Blueprint $table) {
             $table->id();
             $table->integer('member_id')->unsigned()->index();
-            $table->integer('staff_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
-            $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateStaffReachOutToMemberTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('staff_reach_out_to_member');
+        Schema::dropIfExists('heard_from');
     }
 }
