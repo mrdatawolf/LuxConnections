@@ -1,15 +1,22 @@
-<div class="{{ ($hasIssues) ? 'bg-yellow-300' : 'bg-blue-300' }} m-4 p-2 rounded {{ ($isStaff) ? 'hidden' : '' }}">
+<div class="{{ ($hasIssues) ? 'bg-yellow-200' : 'bg-blue-300' }} m-1 pl-2 pr-1 pt-2 rounded {{ ($isStaff) ? 'hidden' : '' }}">
     <div class="grid grid-cols-6">
         <div>
             <div class="{{ ($userHasAlias) ? 'hidden' : '' }}"><span wire:click="$set('showConfirmBurdenModal', true)" class="{{ ($isStaff) ? 'bg-green-300' : 'bg-blue-300' }} material-icons rounded-full">fitness_center</span></div>
         </div>
-        <div class="font-bold col-span-3">{{ $memberName }}</div>
+        <div class="font-bold col-span-5"><x-jet-input type="text" class="p-0 m-0 w-full border-none" value="{{ $memberName }}" disabled/></div>
+    </div>
+    <div class="grid grid-cols-12">
         <div class="col-span-2">
-            <x-jet-label for="linkedStaff" value="{{ __('Link To') }}" />
+            <span title="{{ ($userLinkIssue) ? 'support staff unknown' : $userLinkedToMember->name }}" class="{{ ($userLinkIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full">group</span>
+        </div>
+        <div class="h-6 col-span-3">
+            <x-jet-label for="linkedStaff" value="{{ __('Link To') }}" class="block w-full mt-1 text-sm"/>
+        </div>
+        <div class="p-0 m-0 col-span-7">
             <select
                 name="linkStaff"
                 id="linkStaff"
-                class="block w-full mt-1 text-sm"
+                class="p-0 m-0 block w-full mt-1 text-sm"
                 wire:model.defer="linkedUserId"
                 wire:change="linkMemberToUser">
                 <option></option>
@@ -21,20 +28,12 @@
     </div>
     <div class="grid grid-cols-6 text-left">
         <div>
-            <span title="{{ (empty($userLinkedToMember)) ? '' : $userLinkedToMember->name }}" class="{{ ($userLinkIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full">group</span>
-        </div>
-        <div class="col-span-6">
-            &nbsp;
-        </div>
-    </div>
-    <div class="grid grid-cols-6 text-left">
-        <div>
             <span wire:click="$set('showConfirmHeardModal', true)" class="{{ ($lastHeardIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full" title="note that you heard from user">record_voice_over</span>
         </div>
         <div class="col-span-3">
             <x-jet-label value="Last heard from"/>
         </div>
-        <div class="col-span-2" title="Date a staff member recorded last hearing from the member.">
+        <div class="col-span-2 text-sm" title="Date a staff member recorded last hearing from the member.">
             {{ (empty($lastHeardDate)) ? 'n/a' : $lastHeardDate->toDateString() }}
         </div>
     </div>
@@ -42,10 +41,10 @@
         <div>
             <span wire:click="$set('showConfirmReachOutModal', true)" class="{{ ($lastReachedOutTooIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full" title="mote a reach out to member">ring_volume</span>
         </div>
-        <div class="col-span-3">
+        <div class="col-span-3 text-sm">
             <x-jet-label title="Of {{ $timesReachedOut }} attempts" value="Lastest Reach Out"/>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-2 text-sm">
             {{ (empty($lastReachedOutDate)) ? 'n/a' : $lastReachedOutDate->toDateString() }}
         </div>
     </div>

@@ -1,4 +1,4 @@
-<div>
+<div class="invisible xl:visible">
     <div>Staff Info</div>
     <div>
         @foreach($userIds as $id)

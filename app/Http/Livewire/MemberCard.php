@@ -35,6 +35,7 @@ class MemberCard extends Component
 
     public function mount() {
         $this->getMember();
+        $this->checkTimestamps();
         $this->checkIsStaff();
         $this->getStaff();
         $this->getLastHeardDate();
@@ -100,12 +101,14 @@ class MemberCard extends Component
         if(! empty($this->member->linked_id)) {
             $this->linkedUser         = User::find($this->member->linked_id);
             $this->linkedUserId       = $this->member->linked_id;
+        } else {
+            $this->userLinkIssue     = true;
         }
     }
 
 
     private function getStaff() {
-        $this->users = User::get();
+        $this->users = User::where('id','!=',1)->get();
     }
 
     private function getUserAlias() {
@@ -144,10 +147,22 @@ class MemberCard extends Component
     }
 
 
+    private function checkTimestamps() {
+        if(empty($this->member->created_at)) {
+            $this->member->created_at = Carbon::now();
+        }
+        if(empty($this->member->updated_at)) {
+            $this->member->updated_at = Carbon::now();
+        }
+        $this->member->save();
+    }
+
     private function checkLastHeardDate() {
         $this->lastHeardIssue   = false;
-        if(empty($this->lastHeardDate) || $this->lastHeardDate->lt(Carbon::now()->subDays(30))) {
-            $this->lastHeardIssue = true;
+        if(empty($this->lastHeardDate)) {
+            if($this->member->created_at->lt(Carbon::now()->subDays(30))) {
+                $this->lastHeardIssue = true;
+            }
         }
     }
 
@@ -155,8 +170,10 @@ class MemberCard extends Component
     private function checkLastReachedOutTooDate() {
         $this->lastReachedOutTooIssue = false;
         if(empty($this->lastReachedOutDate)) {
-            $this->lastReachedOutTooIssue = true;
-        } elseif(empty($this->lastHeardDate) ||  $this->lastHeardDate->lt($this->lastReachedOutDate)) {
+            if($this->member->created_at->lt(Carbon::now()->subDays(30))) {
+                $this->lastReachedOutTooIssue = true;
+            }
+        } elseif(empty($this->lastHeardDate) || $this->lastHeardDate->lt($this->lastReachedOutDate)) {
             if($this->lastReachedOutDate->lt(Carbon::now()->subDays(30))) {
                 $this->lastReachedOutTooIssue = true;
             }
@@ -164,7 +181,11 @@ class MemberCard extends Component
     }
 
     private function checkIsStaff() {
-        $this->isStaff = $this->member->isStaff();
+        if(!empty($this->member->alias) && $this->member->alias->id === 1) {
+            $this->isStaff = false;
+        } else {
+            $this->isStaff = $this->member->isStaff();
+        }
     }
 
 
