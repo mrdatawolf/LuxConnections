@@ -74,6 +74,14 @@
             -webkit-animation: fadeInOut 2s;
             animation: fadeInOut 2s;
         }
+
+        .backup_links {
+            margin: 0 auto;
+            opacity: 1;
+            text-align: center;
+            -webkit-animation: fadeInOut 10s;
+            animation: fadeInOut 10s;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -107,6 +115,17 @@
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
             People helping people
+        </div>
+        <div class=" backup_links flex justify-center pt-8 sm:justify-start sm:pt-0">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Landing</a>
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                @endif
+            @endauth
         </div>
     </div>
 </div>
