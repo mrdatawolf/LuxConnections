@@ -1,13 +1,13 @@
 <div class="{{ ($hasIssues) ? 'bg-yellow-200' : 'bg-blue-300' }} m-1 pl-2 pr-1 pt-2 rounded {{ ($isStaff) ? 'hidden' : '' }}">
     <div class="grid grid-cols-6">
         <div>
-            <div class="{{ ($userHasAlias) ? 'hidden' : '' }}"><span wire:click="$set('showConfirmBurdenModal', true)" class="{{ ($isStaff) ? 'bg-green-300' : 'bg-blue-300' }} material-icons rounded-full">fitness_center</span></div>
+            <div class="{{ ($userHasAlias) ? 'hidden' : '' }}" title="Associate this member to your login account."><span wire:click="$set('showConfirmBurdenModal', true)" class="{{ ($isStaff) ? 'bg-green-300' : 'bg-blue-300' }} material-icons rounded-full">fitness_center</span></div>
         </div>
-        <div class="font-bold col-span-5"><x-jet-input type="text" class="p-0 m-0 w-full border-none" value="{{ $memberName }}" disabled/></div>
+        <div class="font-bold col-span-5"><x-jet-input type="text" class="discord_name p-0 m-0 w-full border-none" title="Member's discord name" value="{{ $memberName }}" disabled/></div>
     </div>
     <div class="grid grid-cols-12">
         <div class="col-span-2">
-            <span title="{{ ($userLinkIssue) ? 'support staff unknown' : $userLinkedToMember->name }}" class="{{ ($userLinkIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full">group</span>
+            <span title="{{ ($userLinkIssue) ? 'There are no staff members assigned to this user!' : 'This user is supported by ' . $linkedUser->name }}" class="{{ ($userLinkIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full">group</span>
         </div>
         <div class="h-6 col-span-3">
             <x-jet-label for="linkedStaff" value="{{ __('Link To') }}" class="block w-full mt-1 text-sm"/>
@@ -17,6 +17,7 @@
                 name="linkStaff"
                 id="linkStaff"
                 class="p-0 m-0 block w-full mt-1 text-sm"
+                title="Select a staff member to support this member."
                 wire:model.defer="linkedUserId"
                 wire:change="linkMemberToUser">
                 <option></option>
@@ -28,7 +29,7 @@
     </div>
     <div class="grid grid-cols-6 text-left">
         <div>
-            <span wire:click="$set('showConfirmHeardModal', true)" class="{{ ($lastHeardIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full" title="note that you heard from user">record_voice_over</span>
+            <span wire:click="$set('showConfirmHeardModal', true)" class="{{ ($lastHeardIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full" title="{{ ($lastHeardIssue) ? 'This user has not been heard from in a long time.' : 'This user has been heard from in the last 30 days.' }} Click to note that you heard from user.">record_voice_over</span>
         </div>
         <div class="col-span-3">
             <x-jet-label value="Last heard from"/>
@@ -39,12 +40,12 @@
     </div>
     <div class="grid grid-cols-6 text-left">
         <div>
-            <span wire:click="$set('showConfirmReachOutModal', true)" class="{{ ($lastReachedOutTooIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full" title="mote a reach out to member">ring_volume</span>
+            <span wire:click="$set('showConfirmReachOutModal', true)" class="{{ ($lastReachedOutTooIssue) ? 'bg-red-600' : 'bg-green-600' }} material-icons rounded-full" title="{{ ($lastReachedOutTooIssue) ? 'This member as NOT been reached out to in the last 30 days.' : 'This member as been reached out to in the last 30 days.' }} CLick to note that you reached out to them.">ring_volume</span>
         </div>
         <div class="col-span-3 text-sm">
             <x-jet-label title="Of {{ $timesReachedOut }} attempts" value="Lastest Reach Out"/>
         </div>
-        <div class="col-span-2 text-sm">
+        <div class="col-span-2 text-sm"  title="Date a staff member recorded reaching out to the member.">
             {{ (empty($lastReachedOutDate)) ? 'n/a' : $lastReachedOutDate->toDateString() }}
         </div>
     </div>

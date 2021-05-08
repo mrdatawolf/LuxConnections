@@ -19,6 +19,7 @@ class MemberCard extends Component
     public $memberId;
     public $memberName;
     public $userAlias;
+    public $userHasAlias;
     public $isStaff;
     public $hasIssues;
     public $userLinkIssue;
@@ -31,7 +32,6 @@ class MemberCard extends Component
     public $linkedUserId;
     public $linkedUser;
     public $users;
-    public $userHasAlias;
 
     public function mount() {
         $this->getMember();
@@ -118,7 +118,7 @@ class MemberCard extends Component
     private function getMember() {
         $this->member = Member::with('users','heardFrom','reachedOut', 'alias')->find($this->memberId);
         $this->memberName = $this->member->name;
-        $this->userAlias = $this->member->alias;
+        $this->userAlias = User::find($this->member->user_id);
     }
 
     private function getLastHeardDate() {
