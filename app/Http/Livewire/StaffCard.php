@@ -16,12 +16,14 @@ class StaffCard extends Component
     public $membersSupported;
     public $totalMembersSupported;
     public $userHasAlias;
+    public $specialDisable;
 
     public $listeners = ['memberStaffLinkUpdated'];
 
     public function mount() {
         $this->getUser();
         $this->getMembersSupported();
+        $this->checkForSpecialHide();
     }
 
     public function memberUserLinkUpdated($userId, $memberId) {
@@ -50,6 +52,10 @@ class StaffCard extends Component
     private function getMembersSupported() {
         $this->membersSupported = $this->user->members;
         $this->totalMembersSupported = count($this->membersSupported);
+    }
+
+    private function checkForSpecialHide() {
+        $this->specialDisable = ($this->user->id === 1);
     }
 
     public function render()

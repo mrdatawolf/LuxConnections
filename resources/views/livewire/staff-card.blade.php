@@ -1,4 +1,4 @@
-<div class="staff m-4 p-2 rounded bg-gray-300 grid grid-cols-3">
+<div class="staff m-4 p-2 rounded bg-blue-300 grid grid-cols-3 {{ ($specialDisable) ? 'hidden' : '' }}">
     <div class="font-bold col-span-3 text-center">{{ $user->name }}</div>
     <div><x-jet-label value="{{ __('Alias') }}" /></div>
     <div class="col-span-2">{{ $userAliasName }}</div>
