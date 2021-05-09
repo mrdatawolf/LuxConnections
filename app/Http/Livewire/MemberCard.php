@@ -82,17 +82,17 @@ class MemberCard extends Component
 
 
     public function linkMemberToUser() {
-        if(empty($this->member->linked_id) && ! empty($this->linkedUserId)) {
+        if(empty($this->linkedUserId)) {
+            $this->linkedUser         = null;
+            $this->userLinkIssue     = true;
+            $this->member->linked_id = null;
+            $this->emit('memberUserLinkUpdated', 0, $this->memberId);
+        } else {
             $this->linkedUser         = User::find($this->linkedUserId);
             $this->userLinkIssue     = false;
             $this->member->linked_id = $this->linkedUserId;
             $this->member->save();
             $this->emit('memberUserLinkUpdated', (int)$this->linkedUserId, $this->memberId);
-        } else {
-            $this->linkedUser         = null;
-            $this->userLinkIssue     = true;
-            $this->member->linked_id = null;
-            $this->emit('memberUserLinkUpdated', 0, $this->memberId);
         }
         $this->checkForIssues();
     }
