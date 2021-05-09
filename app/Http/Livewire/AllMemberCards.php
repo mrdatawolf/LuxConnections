@@ -43,7 +43,7 @@ class AllMemberCards extends Component
 
 
     private function getMemberIds() {
-        $this->memberIds = Member::orderBy('id')->pluck('id');
+        $this->memberIds = Member::orderBy('name')->pluck('id');
     }
 
     public function render()
