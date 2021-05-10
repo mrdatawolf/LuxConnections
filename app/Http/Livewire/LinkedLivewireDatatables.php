@@ -29,7 +29,7 @@ class LinkedLivewireDatatables extends LivewireDatatable
     function columns(): array
     {
         return [
-            NumberColumn::name('id'),
+            NumberColumn::name('id')->linkTo('member'),
             Column::name('name')->editable()->defaultSort('asc'),
             Column::name('users.name')->label('Supported By'),
             DateColumn::name('created_at'),
