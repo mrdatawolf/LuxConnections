@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Creativeorange\Gravatar\Gravatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,6 +12,11 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Class User
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -26,7 +32,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -59,23 +67,40 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
     public function members(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Member::class, 'linked_id', 'id');
     }
+
 
     public function heard(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(HeardFrom::class);
     }
 
+
     public function reachedOut(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ReachedOut::class);
     }
 
+
     public function alias(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Member::class, 'user_id', 'id');
+    }
+
+
+    /**
+     * Get the default profile photo URL if no profile photo has been uploaded.
+     *
+     * @return string
+     * @throws \Creativeorange\Gravatar\Exceptions\InvalidEmailException
+     */
+    protected function defaultProfilePhotoUrl(): string
+    {
+        $gravater = new Gravatar();
+        return $gravater->get($this->email);
     }
 }

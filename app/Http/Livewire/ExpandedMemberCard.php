@@ -9,7 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class MemberCard extends Component
+class ExpandedMemberCard extends Component
 {
     public $member;
     public $user;
@@ -211,6 +211,6 @@ class MemberCard extends Component
 
     public function render()
     {
-        return view('livewire.member-card');
+        return view('livewire.expanded-member-card');
     }
 }

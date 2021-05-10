@@ -20,7 +20,7 @@ class StaffLivewireDatatables extends LivewireDatatable
     function columns(): array
     {
         return [
-            NumberColumn::name('id'),
+            NumberColumn::name('id')->linkTo('staff-member'),
             Column::name('name')->defaultSort('asc')->editable(),
             Column::name('email')->editable(),
             DateColumn::name('created_at')

@@ -6,10 +6,9 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\Member;
 
-class AllMemberCards extends Component
+class LimitedMemberCards extends Component
 {
     public $user;
-    public $allMembers;
     public $unlinkedMemberIds = [];
     public $memberIds         = [];
     public $hasAlias;
@@ -24,7 +23,8 @@ class AllMemberCards extends Component
         $this->massEntry      = true;
         $this->showAllMembers = false;
         $this->getUser();
-        $this->getAllMembers();
+        $this->getMemberIds();
+        $this->getSupportedMemberIds();
         $this->checkForAlias();
     }
 
@@ -60,15 +60,24 @@ class AllMemberCards extends Component
     }
 
 
-    private function getAllMembers()
+    private function getMemberIds()
     {
-        $this->allMembers = Member::orderBy('name')->get();
-        $this->memberIds  = $this->allMembers->pluck('id');
+        $linkedMembers           = Member::has('users')->pluck('id');
+        $this->unlinkedMemberIds = Member::whereNotIn('id', $linkedMembers)->pluck('id');
+    }
+
+
+    private function getSupportedMemberIds()
+    {
+        $this->memberIds = $this->user->members()->orderBy('name')->pluck('id');
+        foreach ($this->unlinkedMemberIds as $id) {
+            $this->memberIds[] = $id;
+        }
     }
 
 
     public function render()
     {
-        return view('livewire.all-member-cards');
+        return view('livewire.limited-member-cards');
     }
 }

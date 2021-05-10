@@ -6,10 +6,10 @@
     </x-slot>
     <div class="grid grid-cols-12">
         <div class="col-span-10">
-            @livewire('limited-member-cards')
+            @livewire('all-member-cards')
         </div>
         <div class="col-span-2">
-            @livewire('limited-staff-cards')
+            @livewire('all-staff-cards')
         </div>
     </div>
 </x-app-layout>
