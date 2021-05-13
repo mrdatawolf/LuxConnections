@@ -8,6 +8,24 @@
             <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
         </div>
 
+        <div>
+            <x-jet-label for="linkStaff" value="{{ __('Discord Name') }}" />
+            <select
+                class="block mt-1 w-full rounded"
+                name="linkStaff"
+                id="linkStaff"
+                class="p-0 m-0 block w-full mt-1 text-sm"
+                title="Select a staff member to support this member."
+                required
+                wire:model="linkedMemberId">
+                <option></option>
+                @foreach($members as $member)
+                    <option value="{{ $member->id }}">{{ $member->name }}</option>
+                @endforeach
+
+            </select>
+        </div>
+
         <div class="mt-4">
             <x-jet-label for="email" value="{{ __('Email') }}" />
             <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />

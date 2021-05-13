@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Member;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -34,8 +35,9 @@ class CreateNewUser implements CreatesNewUsers
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
+            ]), function (User $user) use ($input) {
                 $this->createTeam($user);
+                $this->linkUser($user, $input['linkStaff']);
             });
         });
     }
@@ -53,5 +55,12 @@ class CreateNewUser implements CreatesNewUsers
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
+    }
+
+
+    protected function linkUser(User $user, $memberId) {
+        $member = Member::find($memberId);
+        $member->user_id = $user->id;
+        $member->save();
     }
 }

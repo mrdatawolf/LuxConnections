@@ -1,8 +1,4 @@
 <div class="grid grid-cols-12 {{ ($hasIssues) ? 'bg-yellow-200' : 'bg-blue-300' }} m-1 pl-2 pr-1 pt-2 rounded {{ ($isStaff) ? 'hidden' : '' }}">
-
-    <div class="col-span-2">
-        <div class="{{ ($userHasAlias) ? 'hidden' : '' }}" title="Associate this member to your login account."><span wire:click="$set('showConfirmBurdenModal', true)" class="{{ ($isStaff) ? 'bg-green-300' : 'bg-blue-300' }} material-icons rounded-full">fitness_center</span></div>
-    </div>
     <div class="font-bold col-start-2 col-span-10"><x-jet-input type="text" class="discord_name p-0 m-0 w-full border-none" title="Member's discord name" value="{{ $memberName }}"/></div>
     <div class="col-span-12">
         <x-jet-input type="text" wire:model="fullDiscordId" wire:change="changeFullDiscordId" class="p-0 m-0 w-full border-none" value="{{ $fullDiscordId }}" placeholder="Full Discord Id"/>
