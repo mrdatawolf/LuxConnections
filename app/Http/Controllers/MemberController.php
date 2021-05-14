@@ -95,7 +95,7 @@ class MemberController extends Controller
     public function heardFrom($id) {
         $member = Member::with('heardFrom')->find($id);
 
-        return (empty($member->heardFrom)) ? null : $member->heardFrom->sortBy('created_at')->last()->created_at;
+        return $this->getCreatedAt($member);
     }
 
 
@@ -107,8 +107,8 @@ class MemberController extends Controller
      */
     public function newHeardFrom(int $id) {
         $member = Member::with('heardFrom')->find($id);
-        $member->heardFrom()->save(new HeardFrom(['member_id' => (int) $member->id, 'user_id' => 1]));
-        return (empty($member->heardFrom)) ? null : $member->heardFrom->sortBy('created_at')->last()->created_at;
+
+        return $this->getCreatedAt($member);
     }
 
 
@@ -120,8 +120,19 @@ class MemberController extends Controller
      */
     public function newHeardFromFullDiscordId(int $id) {
         $member = Member::with('heardFrom')->where('full_discord_id', $id)->first();
-        $member->heardFrom()->save(new HeardFrom(['member_id' => (int) $member->id, 'user_id' => 1]));
 
-        return (empty($member->heardFrom)) ? null : $member->heardFrom->sortBy('created_at')->last()->created_at;
+        return $this->getCreatedAt($member);
+    }
+
+    private function getCreatedAt($member) {
+        $lastHeard = $member->heardFrom->sortBy('created_at')->last();
+
+        if(empty($lastHeard)) {
+            return response(['message' => 'Not Found'], 204);
+        } else {
+            $member->heardFrom()->save(new HeardFrom(['member_id' => (int)$member->id, 'user_id' => 1]));
+
+            return $lastHeard->created_at;
+        }
     }
 }
