@@ -139,6 +139,15 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/event-manager" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/creativeorange/gravatar" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/httpRequests" />
+      <excludeFolder url="file://$MODULE_DIR$/database/db" />
+      <excludeFolder url="file://$MODULE_DIR$/public/storage" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/24" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/59" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/cc" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/ed" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
