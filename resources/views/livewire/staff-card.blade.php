@@ -3,7 +3,7 @@
     <div><x-jet-label value="{{ __('Alias') }}" /></div>
     <div class="col-span-3">{{ $userAliasName }}</div>
     <div class="col-span-4">
-        <x-jet-label value="Supporting: ({{ $numberOfMembersToDisplay }} shown of {{ $totalMembersSupported }})" title="Showing {{ $numberOfMembersToDisplay }} of the {{ $totalMembersSupported }} total members being supported!"/>
+        <x-jet-label value="Supporting: ({{ $numberOfMembersToDisplay }} shown of {{ $totalMembersSupported }})" title="Showing {{ ($totalMembersSupported < $numberOfMembersToDisplay) ? $numberOfMembersToDisplay : $totalMembersSupported }} of the {{ $totalMembersSupported }} total members being supported!"/>
     </div>
     @foreach($membersDisplayed as $member)
         <div class="text-xs col-span-4  mb-1"><span class="bg-gray-500 rounded-full pl-2 pr-2">{{ $member->name }}</span></div>
